@@ -1,5 +1,4 @@
-# LBMC
 TSM
 =====
 
-R function to calculate Productivity (PCI) and Resilience (RCI) Capacity Index according to [Thiry's](https://doi.org/10.1093/jxb/erw330) Screening Method (TSM).
+R script for preprocesing meteorological data to run the [LATEBLIGHT](https://doi.org/10.1094/PHYTO-95-1191) model.
