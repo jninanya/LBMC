@@ -1,0 +1,288 @@
+###############################################
+######         Analisis de sensibilidad
+###############################################
+per<-c(0.7,0.8,0.9,1.0,1.1,1.2,1.3)
+
+####### 1) LP
+
+LP <- 3.10         # latent period (days)
+LGR <- 0.00375 # lesion growth rate (m day-1)
+SR <- 207000000  # sporulation rate (sporangia m-2 day-1)  
+IE <- 0.9          # infection eficiency
+IL <- 50          # initial lesion
+DOI <- (as.Date(EmergDate)+11) # Day of inoculation
+
+InMicCol <- 0
+IniSpor <- IL
+InocDate <- DOI
+
+ix<-per*LP
+n=length(ix)
+out1<-as.data.frame(matrix(nrow=99,ncol=n))
+for(i in 1:n){
+ LP<-ix[i]  
+ model<-lateblight(WS, Cultivar="Shangi",ApplSys="nonfungicide", InocDate, LGR,IniSpor,SR,IE, LP, MatTime='LATESEASON',InMicCol)
+ out1[,i]=model$Ofile$SimSeverity 
+}
+write.csv(out1,"sens_analysis_for_LP.csv")
+
+####### 2) LGR
+LP <- 3.10         # latent period (days)
+LGR <- 0.00375 # lesion growth rate (m day-1)
+SR <- 207000000  # sporulation rate (sporangia m-2 day-1)  
+IE <- 0.9          # infection eficiency
+IL <- 50          # initial lesion
+DOI <- (as.Date(EmergDate)+11) # Day of inoculation
+
+InMicCol <- 0
+IniSpor <- IL
+InocDate <- DOI
+
+ix<-per*LGR
+n=length(ix)
+out2<-as.data.frame(matrix(nrow=99,ncol=n))
+for(i in 1:n){
+  LGR<-ix[i]  
+  model<-lateblight(WS, Cultivar="Shangi",ApplSys="nonfungicide", InocDate, LGR,IniSpor,SR,IE, LP, MatTime='LATESEASON',InMicCol)
+  out2[,i]=model$Ofile$SimSeverity 
+}
+write.csv(out2,"sens_analysis_for_LGR.csv")
+
+####### 3) SR
+LP <- 3.10         # latent period (days)
+LGR <- 0.00375 # lesion growth rate (m day-1)
+SR <- 207000000  # sporulation rate (sporangia m-2 day-1)  
+IE <- 0.9          # infection eficiency
+IL <- 50          # initial lesion
+DOI <- (as.Date(EmergDate)+11) # Day of inoculation
+
+InMicCol <- 0
+IniSpor <- IL
+InocDate <- DOI
+
+ix<-per*SR
+n=length(ix)
+out3<-as.data.frame(matrix(nrow=99,ncol=n))
+for(i in 1:n){
+  SR<-ix[i]  
+  model<-lateblight(WS, Cultivar="Shangi",ApplSys="nonfungicide", InocDate, LGR,IniSpor,SR,IE, LP, MatTime='LATESEASON',InMicCol)
+  out3[,i]=model$Ofile$SimSeverity 
+}
+write.csv(out3,"sens_analysis_for_SR.csv")
+
+####### 4) IE
+LP <- 3.10         # latent period (days)
+LGR <- 0.00375 # lesion growth rate (m day-1)
+SR <- 207000000  # sporulation rate (sporangia m-2 day-1)  
+IE <- 0.9          # infection eficiency
+IL <- 50          # initial lesion
+DOI <- (as.Date(EmergDate)+11) # Day of inoculation
+
+InMicCol <- 0
+IniSpor <- IL
+InocDate <- DOI
+
+ix<-per*IE
+n=length(ix)
+out4<-as.data.frame(matrix(nrow=99,ncol=n))
+for(i in 1:n){
+  IE<-ix[i]  
+  model<-lateblight(WS, Cultivar="Shangi",ApplSys="nonfungicide", InocDate, LGR,IniSpor,SR,IE, LP, MatTime='LATESEASON',InMicCol)
+  out4[,i]=model$Ofile$SimSeverity 
+}
+write.csv(out4,"sens_analysis_for_IE.csv")
+
+
+####### 5) IL
+LP <- 3.10         # latent period (days)
+LGR <- 0.00375 # lesion growth rate (m day-1)
+SR <- 207000000  # sporulation rate (sporangia m-2 day-1)  
+IE <- 0.9          # infection eficiency
+IL <- 50          # initial lesion
+DOI <- (as.Date(EmergDate)+11) # Day of inoculation
+
+InMicCol <- 0
+IniSpor <- IL
+InocDate <- DOI
+
+ix<-c(5,10,50,100,500,1000,10000)
+n=length(ix)
+out5<-as.data.frame(matrix(nrow=99,ncol=n))
+for(i in 1:n){
+  IL<-ix[i]  
+  IniSpor <- IL
+  model<-lateblight(WS, Cultivar="Shangi",ApplSys="nonfungicide", InocDate, LGR,IniSpor,SR,IE, LP, MatTime='LATESEASON',InMicCol)
+  out5[,i]=model$Ofile$SimSeverity 
+}
+write.csv(out5,"sens_analysis_for_IL.csv")
+
+####### 6) DOI
+LP <- 3.10         # latent period (days)
+LGR <- 0.00375 # lesion growth rate (m day-1)
+SR <- 207000000  # sporulation rate (sporangia m-2 day-1)  
+IE <- 0.9          # infection eficiency
+IL <- 50          # initial lesion
+DOI <- (as.Date(EmergDate)+11) # Day of inoculation
+
+InMicCol <- 0
+IniSpor <- IL
+InocDate <- DOI
+
+ix<-DOI+c(-6,-4,-2,0,2,4,6)
+n=length(ix)
+out6<-as.data.frame(matrix(nrow=99,ncol=n))
+for(i in 1:n){
+  DOI<-ix[i] 
+  InocDate <- DOI
+  model<-lateblight(WS, Cultivar="Shangi",ApplSys="nonfungicide", InocDate, LGR,IniSpor,SR,IE, LP, MatTime='LATESEASON',InMicCol)
+  out6[,i]=model$Ofile$SimSeverity 
+}
+write.csv(out6,"sens_analysis_for_DOI.csv")
+
+
+
+#########################################################################
+##### plot
+png(file.path("fig_lbmodel_sa_v2.png"), width=600, height=800, units="px", pointsize=12)
+
+layout.matrix<-matrix(c(1:8), nrow=4, ncol=2, byrow=TRUE)
+layout(mat=layout.matrix, heights=c(1,1,1,0.3), widths=1)
+
+par(mar=c(0,4.2,0,0), cex=1.5, family="serif", cex.axis=0.9)
+plot(1:99,out1[,1], type="l", col="blue", cex=1.5, lwd = 2,
+     ylim=c(-5,105), xlim=c(0,105), xlab="", ylab="", axes=FALSE)
+lines(1:99,out1[,2], type="l", col="red",    cex=1.5, lwd=2)
+lines(1:99,out1[,3], type="l", col="black",  cex=1.5, lwd=2)
+lines(1:99,out1[,4], type="l", col="yellow", cex=1.5, lwd=2)
+lines(1:99,out1[,5], type="l", col="green",  cex=1.5, lwd=2)
+lines(1:99,out1[,6], type="l", col="cyan",   cex=1.5, lwd=2)
+lines(1:99,out1[,7], type="l", col="pink",   cex=1.5, lwd=2)
+box()
+axis(side=2, at=seq(0,100,by=20), tck=-0.03,
+     labels=seq(0,100,by=20), mgp = c(2,0.9,0), las=1)
+text(x=-5,y=100, expression(bold("LP = 3.10 days")), cex=0.7, pos = 4)
+legend(x=3, y=92,legend=c("-30%","-20%","-10%","control","+10%","+20%","+30%"), 
+       pch="_", col=c("blue","red","black","yellow","green","cyan","pink"),cex=0.7)
+
+
+par(mar=c(0,0,0,4.2), cex=1.5, family="serif", cex.axis=0.9)
+plot(1:99,out2[,1], type="l", col="blue", cex=1.5, lwd = 2,
+     ylim=c(-5,105), xlim=c(0,105), xlab="", ylab="", axes=FALSE)
+lines(1:99,out2[,2], type="l", col="red",    cex=1.5, lwd=2)
+lines(1:99,out2[,3], type="l", col="black",  cex=1.5, lwd=2)
+lines(1:99,out2[,4], type="l", col="yellow", cex=1.5, lwd=2)
+lines(1:99,out2[,5], type="l", col="green",  cex=1.5, lwd=2)
+lines(1:99,out2[,6], type="l", col="cyan",   cex=1.5, lwd=2)
+lines(1:99,out2[,7], type="l", col="pink",   cex=1.5, lwd=2)
+box()
+axis(side=4, at=seq(0,100,by=20), tck=-0.03,
+     labels=seq(0,100,by=20), mgp = c(2,0.9,0), las=1)
+text(x=-5,y=100, expression(bold("LGR = 3.71*10"^{-3}*" m day"^{-1})), cex=0.7, pos = 4)
+legend(x=3, y=92,legend=c("-30%","-20%","-10%","control","+10%","+20%","+30%"), 
+       pch="_", col=c("blue","red","black","yellow","green","cyan","pink"),cex=0.7)
+
+
+par(mar=c(0,4.2,0,0), cex=1.5, family="serif", cex.axis=0.9)
+plot(1:99,out3[,1], type="l", col="blue", cex=1.5, lwd = 2,
+     ylim=c(-5,105), xlim=c(0,105), xlab="", ylab="", axes=FALSE)
+lines(1:99,out3[,2], type="l", col="red",    cex=1.5, lwd=2)
+lines(1:99,out3[,3], type="l", col="black",  cex=1.5, lwd=2)
+lines(1:99,out3[,4], type="l", col="yellow", cex=1.5, lwd=2)
+lines(1:99,out3[,5], type="l", col="green",  cex=1.5, lwd=2)
+lines(1:99,out3[,6], type="l", col="cyan",   cex=1.5, lwd=2)
+lines(1:99,out3[,7], type="l", col="pink",   cex=1.5, lwd=2)
+box()
+axis(side=2, at=seq(0,100,by=20), tck=-0.03,
+     labels=seq(0,100,by=20), mgp = c(2,0.9,0), las=1)
+mtext(side=2, bquote("Disease progress curves"), line=2.7, cex=1.6)
+text(x=-5,y=100, expression(bold("SR = 2.07*10"^{8}*" m"^{2}*"day"^{-1})), cex=0.7, pos = 4)
+legend(x=3, y=92,legend=c("-30%","-20%","-10%","control","+10%","+20%","+30%"), 
+       pch="_", col=c("blue","red","black","yellow","green","cyan","pink"),cex=0.7)
+
+
+par(mar=c(0,0,0,4.2), cex=1.5, family="serif", cex.axis=0.9)
+plot(1:99,out4[,1], type="l", col="blue", cex=1.5, lwd = 2,
+     ylim=c(-5,105), xlim=c(0,105), xlab="", ylab="", axes=FALSE)
+lines(1:99,out4[,2], type="l", col="red",    cex=1.5, lwd=2)
+lines(1:99,out4[,3], type="l", col="black",  cex=1.5, lwd=2)
+lines(1:99,out4[,4], type="l", col="yellow", cex=1.5, lwd=2)
+lines(1:99,out4[,5], type="l", col="green",  cex=1.5, lwd=2)
+lines(1:99,out4[,6], type="l", col="cyan",   cex=1.5, lwd=2)
+lines(1:99,out4[,7], type="l", col="pink",   cex=1.5, lwd=2)
+box()
+axis(side=4, at=seq(0,100,by=20), tck=-0.03,
+     labels=seq(0,100,by=20), mgp = c(2,0.9,0), las=1)
+mtext(side=4, bquote("Disease progress curves"), line=2.7, cex=1.6)
+text(x=-5,y=100, expression(bold("IE = 0.9")), cex=0.7, pos = 4)
+
+legend(x=3, y=92,legend=c("-30%","-20%","-10%","control","+10%","+20%","+30%"), 
+       pch="_", col=c("blue","red","black","yellow","green","cyan","pink"),cex=0.7)
+
+
+par(mar=c(0,4.2,0,0), cex=1.5, family="serif", cex.axis=0.9)
+plot(1:99,out5[,1], type="l", col="blue", cex=1.5, lwd = 2,
+     ylim=c(-5,105), xlim=c(0,105), xlab="", ylab="", axes=FALSE)
+lines(1:99,out5[,2], type="l", col="red",    cex=1.5, lwd=2)
+lines(1:99,out5[,4], type="l", col="black",  cex=1.5, lwd=2) #control
+lines(1:99,out5[,3], type="l", col="yellow", cex=1.5, lwd=2)
+lines(1:99,out5[,5], type="l", col="green",  cex=1.5, lwd=2)
+lines(1:99,out5[,6], type="l", col="cyan",   cex=1.5, lwd=2)
+lines(1:99,out5[,7], type="l", col="pink",   cex=1.5, lwd=2)
+box()
+axis(side=1, at=seq(10,100,by=20), tck=-0.03,
+     labels=seq(10,100,by=20), mgp = c(2,0.9,0), las=1)
+mtext(side=1, bquote("Days after planting"), line=2.1, cex=1.5)
+#ix<-c(5,10,50,100,500,1000,10000)
+
+axis(side=2, at=seq(0,100,by=20), tck=-0.03,
+     labels=seq(0,100,by=20), mgp = c(2,0.9,0), las=1)
+
+legend(x=3, y=92,legend=c("5","10","control","100","500","1000","10000"), 
+       pch="_", col=c("blue","red","yellow","black","green","cyan","pink"),cex=0.7)
+text(x=-5,y=100, expression(bold("IL = 50")), cex=0.7, pos = 4)
+
+par(mar=c(0,0,0,4.2), cex=1.5, family="serif", cex.axis=0.9)
+plot(1:99,out6[,1], type="l", col="blue", cex=1.5, lwd = 2,
+     ylim=c(-5,105), xlim=c(0,105), xlab="", ylab="", axes=FALSE)
+lines(1:99,out6[,2], type="l", col="red",    cex=1.5, lwd=2)
+lines(1:99,out6[,3], type="l", col="black",  cex=1.5, lwd=2)
+lines(1:99,out6[,4], type="l", col="yellow", cex=1.5, lwd=2)
+lines(1:99,out6[,5], type="l", col="green",  cex=1.5, lwd=2)
+lines(1:99,out6[,6], type="l", col="cyan",   cex=1.5, lwd=2)
+lines(1:99,out6[,7], type="l", col="pink",   cex=1.5, lwd=2)
+box()
+
+axis(side=1, at=seq(10,100,by=20), tck=-0.03,
+     labels=seq(10,100,by=20), mgp = c(2,0.9,0), las=1)
+mtext(side=1, bquote("Days after planting"), line=2.1, cex=1.5)
+
+axis(side=4, at=seq(0,100,by=20), tck=-0.03,
+     labels=seq(0,100,by=20), mgp = c(2,0.9,0), las=1)
+
+legend(x=3, y=92,legend=c("-6 days","-4 days","-2 day","control","+2 day","+4 days","+6 days"), 
+       pch="_", col=c("blue","red","black","yellow","green","cyan","pink"),cex=0.7)
+text(x=-5,y=100, expression(bold("DOI = 11 days")), cex=0.7, pos = 4)
+
+
+
+dev.off()
+
+
+xout<-data.frame(matrix(nrow=7,ncol=6))
+rout<-data.frame(matrix(nrow=7,ncol=6))
+rr=audpc(out1[,4],1:99)
+for(i in 1:7){
+  xout[i,1]=audpc(out1[,i],1:99)
+  xout[i,2]=audpc(out2[,i],1:99)
+  xout[i,3]=audpc(out3[,i],1:99)
+  xout[i,4]=audpc(out4[,i],1:99)
+  xout[i,5]=audpc(out5[,i],1:99)
+  xout[i,6]=audpc(out6[,i],1:99)
+  
+  rout[i,1]=(audpc(out1[,i],1:99)-rr)/rr*100
+  rout[i,2]=(audpc(out2[,i],1:99)-rr)/rr*100
+  rout[i,3]=(audpc(out3[,i],1:99)-rr)/rr*100
+  rout[i,4]=(audpc(out4[,i],1:99)-rr)/rr*100
+  rout[i,5]=(audpc(out5[,i],1:99)-rr)/rr*100
+  rout[i,6]=(audpc(out6[,i],1:99)-rr)/rr*100
+}
