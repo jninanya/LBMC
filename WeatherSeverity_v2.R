@@ -86,3 +86,38 @@ climate$tt<-thermalTime(date=climate$date,tmin=climate$tmin,
             endHarvest=as.Date(climate$date[length(climate$date)]), 
             EmergencyDays = 15, parameters = c(0, 12, 24, 35))$tt
 climate$dap<-as.numeric(climate$date - SowingDate)
+
+v1=vector(length=nrow(smr_hour_mean))
+v2=vector(length=nrow(smr_hour_mean))
+
+for(i in 1:nrow(smr_hour_mean)){
+  v1[i]=strsplit(smr_hour_mean$group_hour[i]," ")[[1]][1]
+  v2[i]=strsplit(smr_hour_mean$group_hour[i]," ")[[1]][2]
+}
+w1<-data.frame("date"=v1,"hour"=v2)
+w1$temp<-smr_hour_mean$temp
+w1$rhum<-smr_hour_mean$rhum
+w1$HumidHrs<-NA
+w1$humidtmp<-NA
+w1$HumidHrs<-ifelse(w1$rhum>RHthreshold,1,w1$HumidHrs)
+w1$humidtmp<-ifelse(w1$rhum>RHthreshold,w1$temp,w1$humidtmp)
+
+smr_w1_mean<-w1%>%
+  group_by(date)%>%
+  summarise_if(is.numeric,mean,na.rm=TRUE)
+
+smr_w1_sum<-w1%>%
+  group_by(date)%>%
+  summarise_if(is.numeric,sum,na.rm=TRUE)
+
+Wfile<-data.frame("Date"=as.Date(smr_w1_sum$date))
+Wfile$Rainfall<-pp$prec
+Wfile$Tmp<-smr_w1_mean$temp
+Wfile$HumidHrs<-smr_w1_sum$HumidHrs
+Wfile$humidtmp<-smr_w1_mean$humidtmp
+rownames(Wfile)<-Wfile$Date
+
+(EndEpidDate<-as.Date(Wfile$Date[nrow(Wfile)]))
+(EmergDate<-as.Date(WS1$EmergDate))
+WS<-list("Wfile"=Wfile, "Sfile"=WS1$Sfile, 
+         "EmergDate"=EmergDate,"EndEpidDate"=EndEpidDate)
